@@ -4,6 +4,7 @@ import reset from "styled-reset";
 export const GlobalStyle = createGlobalStyle`
   ${reset}
   body {
+    font-family: "Elice Digital Baeum",sans-serif;
     background: ${({ theme }) => theme.bgColor};
     color: ${({ theme }) => theme.textColor};
     border-color: ${({ theme }) => theme.borderColor};

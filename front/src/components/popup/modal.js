@@ -1,9 +1,60 @@
-import React,{useState,useEffect} from 'react'
-import ReactDOM from 'react-dom';
+import React,{useState,useEffect} from 'react';
 import * as Api from "../../api";
+import styled from "styled-components";
 
-const Modal = (props) => {
-  const { open, close, header,portfolioOwnerId } = props;
+const ModalBox = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  // position absolute 사용 시 화면 중앙 정렬
+  transform:translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid black;
+  & header {
+    margin-top: 35px;
+    font-weight: 600;
+  }
+  & main {
+    line-height: 35px;
+    margin-top: 35px;
+    & span:first-child {
+      font-weight: 600;
+      color: blue;
+      font-size: 25px;
+    }
+  }
+  & div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    & button.close {
+      margin: 0 auto;
+      width: 80%;
+      height: 50px;
+      margin-top: 30px;
+      background: #7575fd;
+      color: white;
+      border: none;
+      &:hover {
+        background: #6262f9;
+      }
+    }
+    & button.closeToday {
+      margin-top: 10px;
+      background: none;
+      border: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+`
+const Modal = ({ open, close }) => {
   const [likeUser, setLikeUser] = useState([]);
   useEffect(() => {
     Api.get("users/maxlike").then((res) => setLikeUser(res.data));
@@ -12,41 +63,27 @@ const Modal = (props) => {
   return (
     <div className={open ? 'openModal modals' : 'modals'}>
       {open ? (
-        <section style={customStyles}>
+        <ModalBox>
           <header style={{fontSize:'25px'}}>
-            {header }
-            <button className="close" onClick={close} style={buttonStyles}>&times;</button>
+          🎉 오늘의 베스트 포트폴리오🎉
           </header>
-          <main style={{fontSize:'20px',marginTop: '15px',color:'#0d6efd'}}>{likeUser[0]?.name}님 축하드립니다!!</main>
-        </section>
+          <main>
+            <span>
+              {likeUser[0]?.name}
+            </span>
+            <span>
+              님 축하드립니다!! <br/>
+              좋아요를 가장 많이 받으셨습니다 ❤
+            </span>
+          </main>
+          <div>
+            <button className="close" onClick={close}>닫기</button>
+            <button className="closeToday" onClick={close}>오늘 하루 그만 보기</button>
+          </div>
+        </ModalBox>
       ) : null}
     </div>
   );
-};
-const customStyles = {
- 
-  left: "50%",
-  right: "auto",
-  bottom: "auto",
-  marginRight: "-50%",
-  width: "300px",
-  height: "200px",
-  position: "fixed",
-  zIndex: "99",
-  top: "0",
-  textAlign: "center",
-  paddingTop: "3%",
-  transform: "translateX(-50%)",
-  border: "3px solid",
-
-};
-const buttonStyles = {
-  right: "0",
-  top: "-1px",
-  position: "absolute",
-  width: "30px",
-  fontSize: "15px",
-  border: "none",
 };
 
 export default Modal;

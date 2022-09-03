@@ -15,9 +15,7 @@ function Network() {
   const [perPage, setPerPage] = useState(12);
   const [totalUser, setTotalUser] = useState(20);
   const [modalOpen, setModalOpen] = useState(true);
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -47,9 +45,7 @@ function Network() {
       <Modal
         open={modalOpen}
         close={closeModal}
-        header="베스트 포트폴리오"
-      ></Modal>
-
+      />
       <Container>
         <Row xs="auto" className="jusify-content-center">
           {users.map((user) => (
