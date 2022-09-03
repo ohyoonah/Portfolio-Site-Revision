@@ -1,0 +1,8 @@
+.idea
+back/.env
+back/.idea
+back/node_modules
+front/.idea
+front/node_modules
+front/yarn.lock
+back/yarn.lock
