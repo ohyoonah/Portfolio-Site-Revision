@@ -1,11 +1,32 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
-
+import { Col, Row, Form, Button } from "react-bootstrap";
+import styled from "styled-components";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 
-function LoginForm() {
+const LoginFormStyle = styled.div`
+  background: ${({ theme }) => theme.card};
+  margin: 0 auto;
+  width: 70%;
+  max-width: 600px;
+  padding: 0.3rem 3rem;
+  border-radius: 40px;
+  .title {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+  }
+  button {
+    width: 100%;
+  }
+  .form-text {
+    display: block;
+    margin-top: 8px;
+  }
+`
+
+const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
@@ -60,10 +81,11 @@ function LoginForm() {
   };
 
   return (
-    <Container>
+    <LoginFormStyle>
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
+            <Form.Label className="title mb-4">로그인</Form.Label>
             <Form.Group controlId="loginEmail">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
@@ -79,7 +101,7 @@ function LoginForm() {
               )}
             </Form.Group>
 
-            <Form.Group controlId="loginPassword" className="mt-3">
+            <Form.Group controlId="loginPassword" className="mb-4">
               <Form.Label>비밀번호</Form.Label>
               <Form.Control
                 type="password"
@@ -94,7 +116,7 @@ function LoginForm() {
               )}
             </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
+            <Form.Group as={Row} className="mb-3 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="primary" type="submit" disabled={!isFormValid}>
                   로그인
@@ -102,7 +124,7 @@ function LoginForm() {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
+            <Form.Group as={Row} className="mb-5 text-center">
               <Col sm={{ span: 20 }}>
                 <Button variant="light" onClick={() => navigate("/register")}>
                   회원가입하기
@@ -112,7 +134,7 @@ function LoginForm() {
           </Form>
         </Col>
       </Row>
-    </Container>
+    </LoginFormStyle>
   );
 }
 

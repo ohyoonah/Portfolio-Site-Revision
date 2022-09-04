@@ -12,8 +12,9 @@ const ModalBox = styled.div`
   width: 500px;
   height: 300px;
   text-align: center;
-  background-color: white;
-  border: 1px solid black;
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.textColor};
+  border: ${({ theme }) => theme.borderColor};
   & header {
     margin-top: 35px;
     font-weight: 600;
@@ -47,6 +48,7 @@ const ModalBox = styled.div`
       margin-top: 10px;
       background: none;
       border: none;
+      color: ${({ theme }) => theme.textColor};
       &:hover {
         text-decoration: underline;
       }

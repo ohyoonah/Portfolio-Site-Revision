@@ -5,7 +5,7 @@ import { UserStateContext, DispatchContext } from "../App";
 import ThemeToggle from "../style/ThemeToggle";
 import { useTheme } from "../context/themeProvider";
 
-function Header() {
+const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
   const navigate = useNavigate();
   const location = useLocation();

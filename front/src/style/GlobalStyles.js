@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.bgColor};
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     align-items: center;
   }
   .card {
