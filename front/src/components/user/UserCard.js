@@ -3,6 +3,18 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
+import styled from "styled-components";
+
+const CardTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  .like {
+    display: flex;
+    position: absolute;
+    right: 0;
+  }
+`
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
@@ -31,13 +43,13 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
       res = await Api.post("like", {
         userId: user.id,
       });
-      await setLike(true);
+      setLike(true);
     } else {
       res = await Api.delete("unlike", user.id);
-      await setLike(false);
+      setLike(false);
     }
     const updatedUser = await res.data;
-    await setLikeCount(updatedUser.likeCount);
+    setLikeCount(updatedUser.likeCount);
   };
 
   //조회수 count
@@ -72,12 +84,28 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   }
 
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-5 ms-3 me-3 mr-5" style={{ width: "18rem", height: "24rem" }}>
       <Card.Body>
-        {/* 조회수 */}
-        <div style={{marginBottom: 20, fontSize: 12}}>
-          {view(user?.viewCount)}
-        </div>
+        <CardTop>
+          <Card.Text className="view text-muted" style={{ fontSize: "14px"}}>
+            {view(user?.viewCount)}
+          </Card.Text>
+          <Col className="like">
+            <Card.Text>{likeCount ? likeCount : user?.likeCount}</Card.Text>
+            {isNetwork && user?.id !== userState.user.id && (
+                <Card.Link
+                  href="#"
+                  className="ms-2 me-4 mt-1"
+                  style={{ textDecoration: "none" }}
+                  onClick={(e) => {
+                    handleLike(e);
+                  }}
+                >
+                  {like ? "❤" : "🤍"}
+                </Card.Link>
+              )}
+          </Col>
+        </CardTop>
         <Row className="justify-content-md-center">
           {user?.imageUploaded ? (
             <Card.Img
@@ -96,20 +124,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           )}
         </Row>
         <Card.Title className="mb-2">
-          {user?.name}{" "}
-          {isNetwork && user?.id !== userState.user.id && (
-            <Card.Link
-              className="mt-3"
-              href="#"
-              style={{ textDecoration: "none" }}
-              onClick={(e) => {
-                handleLike(e);
-              }}
-            >
-              {like ? "❤" : "🤍"}
-            </Card.Link>
-          )}{" "}
-          {likeCount ? likeCount : user?.likeCount}
+          {user?.name}
         </Card.Title>
         <Card.Subtitle className="mb-3 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text className="mb-3">{user?.description}</Card.Text>
