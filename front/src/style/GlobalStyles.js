@@ -9,13 +9,6 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.textColor};
     border-color: ${({ theme }) => theme.borderColor};
   }
-  .nav {
-    background: ${({ theme }) => theme.bgColor};
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    align-items: center;
-  }
   .card {
     background: ${({ theme }) => theme.card};
   }

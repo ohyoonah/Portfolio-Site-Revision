@@ -47,7 +47,7 @@ function Network() {
         close={closeModal}
       />
       <Container>
-        <Row xs="auto" className="jusify-content-center">
+        <Row xs="auto" className="jusify-content-center ms-4">
           {users.map((user) => (
             <UserCard key={user.id} user={user} isNetwork />
           ))}

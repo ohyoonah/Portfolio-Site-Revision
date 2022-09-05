@@ -4,6 +4,24 @@ import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
 import ThemeToggle from "../style/ThemeToggle";
 import { useTheme } from "../context/themeProvider";
+import styled from "styled-components";
+
+const HeaderBox = styled.header`
+  background: ${({ theme }) => theme.bgColor};
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  align-items: center;
+  padding: 20px 10px;
+  .logo {
+    color: ${({ theme }) => theme.textColor};
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .nav-link {
+    color: ${({ theme }) => theme.textColor};
+  }
+`
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
@@ -27,29 +45,33 @@ const Header = () => {
   };
 
   return (
-    <Nav activeKey={location.pathname}>
-      <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="fw-bold" onClick={() => navigate("/")}>
-          나의 페이지
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="fw-bold" onClick={() => navigate("/network")}>
-          네트워크
-        </Nav.Link>
-      </Nav.Item>
-      {isLogin && (
-        <Nav.Item>
-          <Nav.Link className="fw-bold" onClick={logout}>
-            로그아웃
+    <HeaderBox>
+      <Nav activeKey={location.pathname}>
+        <Nav.Item className="me-auto">
+          <Nav.Link disabled className="logo">
+            PORTFOLIO
           </Nav.Link>
         </Nav.Item>
-      )}
-      <ThemeToggle toggle={toggleTheme} mode={ThemeMode} />
-    </Nav>
+        <Nav.Item>
+          <Nav.Link className="fw-bold" onClick={() => navigate("/")}>
+            나의 페이지
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link className="fw-bold" onClick={() => navigate("/network")}>
+            네트워크
+          </Nav.Link>
+        </Nav.Item>
+        {isLogin && (
+          <Nav.Item>
+            <Nav.Link className="fw-bold" onClick={logout}>
+              로그아웃
+            </Nav.Link>
+          </Nav.Item>
+        )}
+        <ThemeToggle toggle={toggleTheme} mode={ThemeMode} />
+      </Nav>
+    </HeaderBox>
   );
 }
 

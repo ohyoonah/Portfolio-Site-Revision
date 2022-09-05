@@ -86,7 +86,7 @@ const LoginForm = () => {
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
             <Form.Label className="title mb-4">로그인</Form.Label>
-            <Form.Group controlId="loginEmail">
+            <Form.Group controlId="loginEmail" className="mb-4">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
                 type="email"
