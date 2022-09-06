@@ -2,16 +2,19 @@ import React from "react";
 import styled from "styled-components";
 
 const ToggleBtn = styled.button`
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border: none;
   border-radius: 50%;
-  background: transparent;
-  font-size: 25px;
+  background: ${({ theme }) => theme.textColor};;
+  font-size: 35px;
   margin-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 25px;
+  right: 10px;
   &:hover {
     transform: scale(1.3);
   }

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
 import ThemeToggle from "../style/ThemeToggle";
@@ -18,8 +18,29 @@ const HeaderBox = styled.header`
     font-size: 1.5rem;
     font-weight: 700;
   }
-  .nav-link {
-    color: ${({ theme }) => theme.textColor};
+  .menu {
+    align-self: center;
+  }
+  .logout {
+    align-self: center;
+    font-size: 0.9rem;
+    border-left: 1px solid lightgray;
+  }
+`
+
+const NavLinkStyle = styled(NavLink)`
+  color: ${({ theme }) => theme.textColor};
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 8px; 
+  margin-right: 15px;
+  &:hover {
+    color: ${({ theme }) => theme.pointColor};
+  }
+  &.active {
+    color: ${({ theme }) => theme.pointColor};
+    font-weight: 600;
+    border-bottom: 3px solid ${({ theme }) => theme.pointColor};
   }
 `
 
@@ -52,19 +73,17 @@ const Header = () => {
             PORTFOLIO
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="fw-bold" onClick={() => navigate("/")}>
+        <Nav.Item className="menu">
+          <NavLinkStyle className={({isActive}) => (isActive && "active")} to="/">
             나의 페이지
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link className="fw-bold" onClick={() => navigate("/network")}>
+          </NavLinkStyle>
+          <NavLinkStyle className={({isActive}) => (isActive && "active")} to="/network">
             네트워크
-          </Nav.Link>
+          </NavLinkStyle>
         </Nav.Item>
         {isLogin && (
-          <Nav.Item>
-            <Nav.Link className="fw-bold" onClick={logout}>
+          <Nav.Item className="logout">
+            <Nav.Link onClick={logout} className="text-muted">
               로그아웃
             </Nav.Link>
           </Nav.Item>
