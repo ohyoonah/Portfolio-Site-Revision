@@ -1,14 +1,26 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
+import Swal from "sweetalert2";
 
-function AwardCard({ award, setAward, setIsEditing, isEditable }) {
-  // 삭제 기능
-  async function handleDelete() {
+const AwardCard = ({ award, setAward, setIsEditing, isEditable }) => {
+  const handleDelete = async () => {
     try {
-      await Api.delete("awards", award.awardId);
-
-      const res = await Api.get("awards", award.userId);
-      setAward(res.data);
+      Swal.fire ({
+        icon: "warning",
+        title: "정말 삭제하시겠습니까?",
+        text: "삭제하면 다시 복구할 수 없습니다.",
+        showCancelButton: true
+      }).then(async (result) => {
+        if(result.isConfirmed) {
+          await Api.delete("awards", award.awardId);
+          const res = await Api.get("awards", award.userId);
+          setAward(res.data);
+          Swal.fire ({
+            title: "삭제가 완료되었습니다!",
+            icon: "success"
+          })
+        }
+      })
     } catch (e) {
       console.log(e);
     }
@@ -25,19 +37,16 @@ function AwardCard({ award, setAward, setIsEditing, isEditable }) {
         {isEditable && (
           <Col xs lg="2">
             <Button
+              className="me-2"
               variant="outline-info"
               size="sm"
               onClick={() => setIsEditing((prev) => !prev)}
-            >
-              Edit
-            </Button>{" "}
+            >Edit</Button>
             <Button
               variant="outline-secondary"
               size="sm"
               onClick={() => handleDelete()}
-            >
-              Delete
-            </Button>
+            >Delete</Button>
           </Col>
         )}
       </Row>
