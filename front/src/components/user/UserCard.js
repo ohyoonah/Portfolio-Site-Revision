@@ -11,12 +11,22 @@ const CardTop = styled.div`
   height: 10%;
   .like {
     display: flex;
+    flex-direction: column;
     position: absolute;
     right: 0;
+    .likeCount{
+      margin-left: 18px;
+      font-size: 12px;
+    }
   }
 `
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+const CardBottom = styled.div`
+  position: absolute;
+  bottom: 20px;
+`
+
+const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const [like, setLike] = useState(false);
@@ -87,37 +97,37 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     <Card className="mb-5 ms-3 me-3 mr-5" style={{ width: "18rem", height: "24rem" }}>
       <Card.Body>
         <CardTop>
-          <Card.Text className="view text-muted" style={{ fontSize: "14px"}}>
+          <Card.Text className="view text-muted" style={{ fontSize: "12px"}}>
             {view(user?.viewCount)}
           </Card.Text>
-          <Col className="like">
-            <Card.Text>{likeCount ? likeCount : user?.likeCount}</Card.Text>
+          <Row className="like">
             {isNetwork && user?.id !== userState.user.id && (
                 <Card.Link
                   href="#"
                   className="ms-2 me-4 mt-1"
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none", fontSize: "20px" }}
                   onClick={(e) => {
                     handleLike(e);
                   }}
                 >
-                  {like ? "❤" : "🤍"}
+                  {like ? "🧡" : "🤍"}
                 </Card.Link>
               )}
-          </Col>
+              <Card.Text className="me-3 text-muted likeCount">{likeCount ? likeCount : user?.likeCount}</Card.Text>
+          </Row>
         </CardTop>
         <Row className="justify-content-md-center">
           {user?.imageUploaded ? (
             <Card.Img
-              style={{ width: "10rem", height: "8rem" }}
-              className="mb-3"
+              style={{ width: "12rem", height: "9rem" }}
+              className="mb-3 mt-2"
               src={`${Api.serverUrl}image/${user.id}`}
               alt="나만의 프로필"
             />
           ) : (
             <Card.Img
-              style={{ width: "10rem", height: "8rem" }}
-              className="mb-3"
+              style={{ width: "12rem", height: "9rem" }}
+              className="mb-3 mt-2"
               src="http://placekitten.com/200/200"
               alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
             />
@@ -145,15 +155,17 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           </Col>
         )}
 
-        {isNetwork && (
-          <Card.Link
-            className="text-decoration-none"
-            href="#"
-            onClick={(e) => handleCount(e)}
-          >
-            포트폴리오
-          </Card.Link>
-        )}
+        <CardBottom>
+          {isNetwork && (
+            <Card.Link
+              className="text-decoration-none"
+              href="#"
+              onClick={(e) => handleCount(e)}
+            >
+              포트폴리오
+            </Card.Link>
+          )}
+        </CardBottom>
       </Card.Body>
     </Card>
   );
