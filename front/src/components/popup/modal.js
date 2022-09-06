@@ -24,7 +24,7 @@ const ModalBox = styled.div`
     margin-top: 35px;
     & span:first-child {
       font-weight: 600;
-      color: blue;
+      color: ${({ theme }) => theme.pointColor};
       font-size: 25px;
     }
   }
@@ -56,18 +56,41 @@ const ModalBox = styled.div`
   }
   
 `
-const Modal = ({ open, close }) => {
+const Modal = () => {
   const [likeUser, setLikeUser] = useState([]);
+  const [modalOpen, setModalOpen] = useState(true);
+
+  const VISITED_BEFORE_DATE = window.localStorage.getItem("VisitedBeforeDate");
+  const VISITED_TODAY = new Date().getDate();
+
+  console.log(VISITED_BEFORE_DATE);
+  console.log(VISITED_TODAY);
+
   useEffect(() => {
     Api.get("users/maxlike").then((res) => setLikeUser(res.data));
-  }, []);
+
+    if (VISITED_BEFORE_DATE !== null) {
+      if (VISITED_BEFORE_DATE === VISITED_TODAY) {
+          window.localStorage.removeItem("VisitedBeforeDate")
+          setModalOpen(true)
+      }
+      if (VISITED_BEFORE_DATE !== VISITED_TODAY) {
+        setModalOpen(false)
+      }
+    }
+  }, [VISITED_BEFORE_DATE]);
+
+  const dayClose = () => {
+    setModalOpen(false);
+    window.localStorage.setItem("VisitedBeforeDate", new Date().getDate() + 1);
+  }
   
   return (
-    <div className={open ? 'openModal modals' : 'modals'}>
-      {open ? (
+    <>
+      {modalOpen ? (
         <ModalBox>
           <header style={{fontSize:'25px'}}>
-          🎉 오늘의 베스트 포트폴리오🎉
+            🎉 오늘의 베스트 포트폴리오🎉
           </header>
           <main>
             <span>
@@ -79,12 +102,12 @@ const Modal = ({ open, close }) => {
             </span>
           </main>
           <div>
-            <button className="close" onClick={close}>닫기</button>
-            <button className="closeToday" onClick={close}>오늘 하루 그만 보기</button>
+            <button className="close" onClick={() => setModalOpen(false)}>닫기</button>
+            <button className="closeToday" onClick={dayClose}>오늘 하루 그만 보기</button>
           </div>
         </ModalBox>
       ) : null}
-    </div>
+    </>
   );
 };
 

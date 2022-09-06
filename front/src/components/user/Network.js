@@ -14,11 +14,6 @@ function Network() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(12);
   const [totalUser, setTotalUser] = useState(20);
-  const [modalOpen, setModalOpen] = useState(true);
-  
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
@@ -42,10 +37,7 @@ function Network() {
 
   return (
     <>
-      <Modal
-        open={modalOpen}
-        close={closeModal}
-      />
+      <Modal />
       <Container>
         <Row xs="auto" className="jusify-content-center ms-4">
           {users.map((user) => (
