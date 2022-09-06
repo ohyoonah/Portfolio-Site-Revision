@@ -4,6 +4,7 @@ import { Col, Row, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import Swal from "sweetalert2";
 
 const LoginFormStyle = styled.div`
   background: ${({ theme }) => theme.card};
@@ -77,6 +78,11 @@ const LoginForm = () => {
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      Swal.fire({
+        icon: "error",
+        title: "로그인 실패",
+        text: "이메일 주소와 비밀번호를 다시 확인해 주세요!"
+      })
     }
   };
 
