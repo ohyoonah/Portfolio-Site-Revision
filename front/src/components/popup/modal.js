@@ -63,19 +63,16 @@ const Modal = () => {
   const VISITED_BEFORE_DATE = window.localStorage.getItem("VisitedBeforeDate");
   const VISITED_TODAY = new Date().getDate();
 
-  console.log(VISITED_BEFORE_DATE);
-  console.log(VISITED_TODAY);
-
   useEffect(() => {
     Api.get("users/maxlike").then((res) => setLikeUser(res.data));
 
     if (VISITED_BEFORE_DATE !== null) {
-      if (VISITED_BEFORE_DATE === VISITED_TODAY) {
-          window.localStorage.removeItem("VisitedBeforeDate")
-          setModalOpen(true)
+      if (VISITED_TODAY >= VISITED_BEFORE_DATE) {
+          window.localStorage.removeItem("VisitedBeforeDate");
+          setModalOpen(true);
       }
       if (VISITED_BEFORE_DATE !== VISITED_TODAY) {
-        setModalOpen(false)
+        setModalOpen(false);
       }
     }
   }, [VISITED_BEFORE_DATE]);
