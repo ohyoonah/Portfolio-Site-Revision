@@ -11,12 +11,13 @@ function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
-  const [totalUser, setTotalUser] = useState(20);
+  const [count, setCount] = useState({
+    page: 1,
+    perPage: 12,
+    totalUser: 20,
+  });
 
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
     if (!userState.user) {
       navigate("/login");
       return;
@@ -24,16 +25,16 @@ function Network() {
     const getUserList = async () => {
       try {
         const { data } = await Api.get(
-          `userlist?page=${page}&perPage=${perPage}`
+          `userlist?page=${count.page}&perPage=${count.perPage}`
         );
         setUsers(data.users);
-        setTotalUser(data.totalPage);
+        setCount({ ...data, totalUser: data.totalPage });
       } catch (err) {
         console.log(err);
       }
     };
     getUserList();
-  }, [userState, navigate, page]);
+  }, [userState, navigate, count.page]);
 
   return (
     <>
@@ -45,10 +46,10 @@ function Network() {
           ))}
         </Row>
         <Pagination
-          total={totalUser}
-          perPage={perPage}
-          page={page}
-          setPage={setPage}
+          total={count.totalUser}
+          perPage={count.perPage}
+          page={count.page}
+          setCount={setCount}
         />
       </Container>
     </>
