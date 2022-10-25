@@ -4,7 +4,6 @@ import * as Api from "../../api";
 import * as Util from "../../util";
 
 function AwardEditForm({ currentAward, setAward, setIsEditing }) {
-  // 수상 & 내용
   const [form, setForm] = useState(currentAward);
 
   function handleChange(e) {
@@ -23,11 +22,7 @@ function AwardEditForm({ currentAward, setAward, setIsEditing }) {
       return false;
     }
 
-
-    //try~catch
     try {
-      // 수정해서 보내기
-      
       await Api.put(`awards/${currentAward.awardId}`, {
         ...form,
       });

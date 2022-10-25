@@ -14,17 +14,17 @@ const CardTop = styled.div`
     flex-direction: column;
     position: absolute;
     right: 0;
-    .likeCount{
+    .likeCount {
       margin-left: 18px;
       font-size: 12px;
     }
   }
-`
+`;
 
 const CardBottom = styled.div`
   position: absolute;
   bottom: 20px;
-`
+`;
 
 const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
   const navigate = useNavigate();
@@ -33,8 +33,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
   const [likeCount, setLikeCount] = useState(user?.likeCount || 0);
 
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
-    // useState 훅을 통해 users 상태를 생성함.
     if (!userState.user) {
       navigate("/login");
       return;
@@ -62,8 +60,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
     setLikeCount(updatedUser.likeCount);
   };
 
-  //조회수 count
-
   const handleCount = async (e) => {
     e.preventDefault();
 
@@ -74,46 +70,48 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
 
       navigate(`/users/${user.id}`);
     } catch (e) {
-      
       console.log(e);
     }
   };
 
-  // 조회수 표시
-  function view (count) {
+  function view(count) {
     if (count > 1) {
-      return `views ${count}`
-    }
-    else if (count ===1 ) {
-      return `view ${count}`
-    }
-    else{
+      return `views ${count}`;
+    } else if (count === 1) {
+      return `view ${count}`;
+    } else {
       return;
     }
-
   }
 
+  console.log(user);
+
   return (
-    <Card className="mb-5 ms-3 me-3 mr-5" style={{ width: "18rem", height: "24rem" }}>
+    <Card
+      className="mb-5 ms-3 me-3 mr-5"
+      style={{ width: "18rem", height: "24rem" }}
+    >
       <Card.Body>
         <CardTop>
-          <Card.Text className="view text-muted" style={{ fontSize: "12px"}}>
+          <Card.Text className="view text-muted" style={{ fontSize: "12px" }}>
             {view(user?.viewCount)}
           </Card.Text>
           <Row className="like">
             {isNetwork && user?.id !== userState.user.id && (
-                <Card.Link
-                  href="#"
-                  className="ms-2 me-4 mt-1"
-                  style={{ textDecoration: "none", fontSize: "20px" }}
-                  onClick={(e) => {
-                    handleLike(e);
-                  }}
-                >
-                  {like ? "🧡" : "🤍"}
-                </Card.Link>
-              )}
-              <Card.Text className="me-3 text-muted likeCount">{likeCount ? likeCount : user?.likeCount}</Card.Text>
+              <Card.Link
+                href="#"
+                className="ms-2 me-4 mt-1"
+                style={{ textDecoration: "none", fontSize: "20px" }}
+                onClick={(e) => {
+                  handleLike(e);
+                }}
+              >
+                {like ? "🧡" : "🤍"}
+              </Card.Link>
+            )}
+            <Card.Text className="me-3 text-muted likeCount">
+              {likeCount ? likeCount : user?.likeCount}
+            </Card.Text>
           </Row>
         </CardTop>
         <Row className="justify-content-md-center">
@@ -133,9 +131,7 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
             />
           )}
         </Row>
-        <Card.Title className="mb-2">
-          {user?.name}
-        </Card.Title>
+        <Card.Title className="mb-2">{user?.name}</Card.Title>
         <Card.Subtitle className="mb-3 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text className="mb-3">{user?.description}</Card.Text>
 
@@ -169,6 +165,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default UserCard;
