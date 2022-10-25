@@ -4,6 +4,8 @@
 
 🔗 [블로그 기술 정리](https://ohyoonah.github.io/project/2022-09-29-web-portfolio-site/)
 
+<br>
+
 ![시연](/test_1.gif)
 ![시연](/test_2.gif)
 
@@ -13,6 +15,8 @@
 
 **2022.08.22 ~ 2022.09.02**
 
+<br>
+
 ## ⚙ 실행 방법
 
 ```
@@ -21,6 +25,8 @@ cd front / cd back
 yarn
 yarn start
 ```
+
+<br>
 
 ## 🏆 담당 파트
 
@@ -32,9 +38,13 @@ yarn start
 - 팝업창 노출 여부 관리
 - 디자인 정리
 
+<br>
+
 ## 🛠 기술 스택
 
 React, styled-components, Bootstrap, Node.js, MongoDB
+
+<br>
 
 ## 💡 컴포넌트 구조
 
