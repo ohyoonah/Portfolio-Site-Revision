@@ -46,4 +46,9 @@ app.use(likeRouter);
 
 app.use(errorMiddleware);
 
+app.use(express.static(path.join(__dirname, "../front", "build")))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../front", "build", "index.html"));
+});
+
 export { app };
