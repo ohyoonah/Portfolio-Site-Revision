@@ -4,6 +4,7 @@ import * as Api from "../../api";
 import * as Util from "../../util";
 
 function AwardAddForm({ portfolioOwnerId, setAward, setIsAdding }) {
+  // 수상 내역
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -28,12 +29,15 @@ function AwardAddForm({ portfolioOwnerId, setAward, setIsAdding }) {
 
     const Id = portfolioOwnerId;
 
+    // try ~ catch로 오류보내기
     try {
+      // 수상내역 추가해서 보내기
       await Api.post("award/create", {
         Id,
         ...form,
       });
 
+      // 추가한 후 수상내역 새로 받아오기
       const res = await Api.get("awards", Id);
       setAward(res.data);
       setIsAdding(false);

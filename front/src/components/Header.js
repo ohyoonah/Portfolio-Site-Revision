@@ -26,13 +26,13 @@ const HeaderBox = styled.header`
     font-size: 0.9rem;
     border-left: 1px solid lightgray;
   }
-`;
+`
 
 const NavLinkStyle = styled(NavLink)`
   color: ${({ theme }) => theme.textColor};
   text-decoration: none;
   font-size: 1.2rem;
-  padding: 8px;
+  padding: 8px; 
   margin-right: 15px;
   &:hover {
     color: ${({ theme }) => theme.pointColor};
@@ -42,7 +42,7 @@ const NavLinkStyle = styled(NavLink)`
     font-weight: 600;
     border-bottom: 3px solid ${({ theme }) => theme.pointColor};
   }
-`;
+`
 
 const Header = () => {
   const [ThemeMode, toggleTheme] = useTheme();
@@ -52,11 +52,16 @@ const Header = () => {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 
+  // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
 
+  // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
+    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
+    // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
+    // 기본 페이지로 돌아감.
     navigate("/");
   };
 
@@ -69,16 +74,10 @@ const Header = () => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item className="menu">
-          <NavLinkStyle
-            className={({ isActive }) => isActive && "active"}
-            to="/"
-          >
+          <NavLinkStyle className={({isActive}) => (isActive && "active")} to="/">
             나의 페이지
           </NavLinkStyle>
-          <NavLinkStyle
-            className={({ isActive }) => isActive && "active"}
-            to="/network"
-          >
+          <NavLinkStyle className={({isActive}) => (isActive && "active")} to="/network">
             네트워크
           </NavLinkStyle>
         </Nav.Item>
@@ -93,6 +92,6 @@ const Header = () => {
       </Nav>
     </HeaderBox>
   );
-};
+}
 
 export default Header;

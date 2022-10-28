@@ -40,6 +40,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
       throw new Error("비밀번호를 입력해주세요.");
     }
 
+    // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
       name,
       email,
@@ -58,8 +59,10 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
 
 userAuthRouter.post("/user/login", async function (req, res, next) {
   try {
+    // req (request) 에서 데이터 가져오기
     const { email, password } = req.body;
 
+    // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
 
     if (user.errorMessage) {
@@ -82,6 +85,7 @@ userAuthRouter.get(
 
       const total = await UserModel.countDocuments({});
 
+      // jwt토큰에서 사용자 id를 추출
       const id = req.currentUserId;
       const users = await User.findAllNetwork(id, page, perPage);
 
@@ -100,6 +104,7 @@ userAuthRouter.get(
   login_required,
   async function (req, res, next) {
     try {
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       const user_id = req.currentUserId;
       const currentUserInfo = await userAuthService.getUserInfo({
         user_id,
@@ -135,7 +140,9 @@ userAuthRouter.put(
   login_required,
   async function (req, res, next) {
     try {
+      // URI로부터 사용자 id를 추출함.
       const user_id = req.params.id;
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
@@ -160,6 +167,7 @@ userAuthRouter.put(
         viewCount,
       };
 
+      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
 
       if (updatedUser.errorMessage) {

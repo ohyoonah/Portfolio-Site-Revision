@@ -30,7 +30,8 @@
     "mongoose": "^6.2.1",
     "multer": "^1.4.5-lts.1",
     "supertest": "^6.1.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",
@@ -51,7 +52,7 @@
       "__config__"
     ]
   },
-  "engines":{
+  "engines": {
     "node": "16.14.0"
   }
 }
