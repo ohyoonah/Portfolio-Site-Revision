@@ -6,8 +6,8 @@
 
 <br>
 
-![시연](/test_1.gif)
-![시연](/test_2.gif)
+![시연](./front/public/test_1.gif)
+![시연](./front/public/test_2.gif)
 
 <br>
 

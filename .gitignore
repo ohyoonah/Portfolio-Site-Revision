@@ -7,3 +7,4 @@ front/node_modules
 front/yarn.lock
 back/yarn.lock
 node_modules
+.DS_Store
