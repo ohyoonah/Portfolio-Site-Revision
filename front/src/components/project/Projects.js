@@ -13,11 +13,13 @@ const Projects = ({ portfolioOwnerId, isEditable }) => {
   };
 
   useEffect(() => {
-    Api.get("projects", portfolioOwnerId).then((res) => {
-      if (Array.isArray(res.data)) {
-        setProjects(res.data);
+    const getData = async () => {
+      const { data } = await Api.get("projects", portfolioOwnerId);
+      if (Array.isArray(data)) {
+        setProjects(data);
       }
-    });
+    };
+    getData();
   }, [portfolioOwnerId]);
 
   return (

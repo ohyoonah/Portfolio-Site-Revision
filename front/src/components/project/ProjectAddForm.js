@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import * as Api from "../../api";
-import {isSameDay, isAfter }  from 'date-fns'
+import { isSameDay, isAfter } from "date-fns";
 
 const ProjectAddForm = ({ isAdding, portfolioOwnerId, setProjects }) => {
   const [form, setForm] = useState({
@@ -21,16 +21,15 @@ const ProjectAddForm = ({ isAdding, portfolioOwnerId, setProjects }) => {
   };
 
   const handleStartDateChange = (startDate) => {
-    if(isSameDay(startDate, form.endDate)) {
-      setForm({...form, startDate})
+    if (isSameDay(startDate, form.endDate)) {
+      setForm({ ...form, startDate });
     }
-    if(isAfter(startDate, form.endDate)){
-
-      setForm({...form, startDate: startDate, endDate: startDate})
-    }else {
-      setForm({...form, startDate})
+    if (isAfter(startDate, form.endDate)) {
+      setForm({ ...form, startDate: startDate, endDate: startDate });
+    } else {
+      setForm({ ...form, startDate });
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,8 +40,8 @@ const ProjectAddForm = ({ isAdding, portfolioOwnerId, setProjects }) => {
         ...form,
       });
 
-      const res = await Api.get("projects", userId);
-      setProjects(res.data);
+      const { data } = await Api.get("projects", userId);
+      setProjects(data);
 
       isAdding(false);
     } catch (err) {
@@ -73,7 +72,7 @@ const ProjectAddForm = ({ isAdding, portfolioOwnerId, setProjects }) => {
       </Form.Group>
 
       <Row className="mt-3 mb-3">
-        <Form.Group sm="auto" as={Col} >
+        <Form.Group sm="auto" as={Col}>
           <DatePicker
             selected={form.startDate}
             onChange={handleStartDateChange}
@@ -83,13 +82,13 @@ const ProjectAddForm = ({ isAdding, portfolioOwnerId, setProjects }) => {
             endDate={form.endDate}
           />
         </Form.Group>
-        <Form.Group sm="auto" as={Col} >
-          <span style={{fontSize: 20}}>~</span>
+        <Form.Group sm="auto" as={Col}>
+          <span style={{ fontSize: 20 }}>~</span>
         </Form.Group>
         <Form.Group sm="auto" as={Col}>
           <DatePicker
             selected={form.endDate}
-            onChange={(endDate) => setForm({...form, endDate})}
+            onChange={(endDate) => setForm({ ...form, endDate })}
             value={form.endDate}
             selectsEnd
             startDate={form.startDate}

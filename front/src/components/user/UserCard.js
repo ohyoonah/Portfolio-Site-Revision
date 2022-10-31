@@ -33,8 +33,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
   const [likeCount, setLikeCount] = useState(user?.likeCount || 0);
 
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
-    // useState 훅을 통해 users 상태를 생성함.
     if (!userState.user) {
       navigate("/login");
       return;
@@ -62,7 +60,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
     setLikeCount(updatedUser.likeCount);
   };
 
-  //조회수 count
 
   const handleCount = async (e) => {
     e.preventDefault();
@@ -79,7 +76,6 @@ const UserCard = ({ user, setIsEditing, isEditable, isNetwork }) => {
     }
   };
 
-  // 조회수 표시
   function view (count) {
     if (count > 1) {
       return `views ${count}`
